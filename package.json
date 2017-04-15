@@ -1,0 +1,16 @@
+{
+  "name": "ts-hapi",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "hapi-sequelize": "^3.0.4",
+    "pg": "^6.1.5",
+    "sequelize": "^3.30.4"
+  }
+}
