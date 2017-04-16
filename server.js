@@ -10,10 +10,9 @@ server.route({
   method: "GET",
   path: "/",
   handler: (request, reply) => {
-    reply("Hello World");
+    reply("Welcome to API");
   }
 });
-
 
 const startServer = () => {
   server.start(err => {
@@ -23,7 +22,7 @@ const startServer = () => {
 }
 
 server.register([
-  require('./src/boostrap/boostrap')
+  require('./src/boostrap')
 ], err => {
   if (err) throw err;
   startServer();
