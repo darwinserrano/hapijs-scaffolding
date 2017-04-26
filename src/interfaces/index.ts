@@ -5,11 +5,11 @@ export interface IPluginRegister {
   attributes?: IPluginInfo;
 }
 
-export interface IPlugin {
-  register: IPluginRegister
-}
-
 export interface IPluginInfo {
   name: string;
   version: string;
+}
+
+export interface IPlugin {
+  register: IPluginRegister;
 }

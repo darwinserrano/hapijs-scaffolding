@@ -1,0 +1,11 @@
+{
+  "apps": [
+    {
+      "exec_mode": "cluster",
+      "instances": 4,
+      "script": "./dist/server.js",
+      "name": "api-hapi",
+      "interpreter": "node"
+    }
+  ]
+}
