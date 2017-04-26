@@ -1,5 +1,7 @@
-'use strict';
-const Hapi = require('hapi');
+/// <reference path="../typings/index.d.ts" />
+
+import * as Hapi from "hapi";
+import Boostrap from "./boostrap";
 
 const server = new Hapi.Server();
 server.connection({
@@ -9,7 +11,8 @@ server.connection({
 server.route({
   method: "GET",
   path: "/",
-  handler: (request, reply) => {
+  config: { auth: false },
+  handler: (request: Hapi.Request, reply: Hapi.IReply) => {
     reply("Welcome to API");
   }
 });
@@ -21,9 +24,7 @@ const startServer = () => {
   });
 }
 
-server.register([
-  require('./src/boostrap')
-], err => {
+server.register(Boostrap, err => {
   if (err) throw err;
   startServer();
 });

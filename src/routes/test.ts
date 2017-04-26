@@ -1,10 +1,10 @@
-const Test = require('../controllers/TestController')
+import Test from '../controllers/TestController';
 
-module.exports = [{
+export default [{
   path: '/test1',
   method: 'GET',
   config: {
     auth: 'jwt'
   },
   handler: Test.list
-}]
+}];

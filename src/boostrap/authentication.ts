@@ -1,4 +1,4 @@
-module.exports = (decoded, request, callback) => {
+const authentication = (decoded, request, callback) => {
   const data = () => {
     return { // our "users database"
       1: {
@@ -15,3 +15,5 @@ module.exports = (decoded, request, callback) => {
     return callback(null, true);
   }
 }
+
+export = authentication;
