@@ -1,7 +1,7 @@
 /// <reference path="../typings/index.d.ts" />
 
 import * as Hapi from "hapi";
-import Boostrap from "./boostrap";
+import { boostrap } from "./boostrap";
 
 const server = new Hapi.Server();
 server.connection({
@@ -24,7 +24,7 @@ const startServer = () => {
   });
 }
 
-server.register(Boostrap, err => {
+server.register(boostrap, err => {
   if (err) throw err;
   startServer();
 });

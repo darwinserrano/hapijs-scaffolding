@@ -8,15 +8,8 @@ import * as HapiSequelize from 'hapi-sequelize';
 import * as HapiRouter from 'hapi-router';
 import { IPlugin } from '../interfaces';
 
-class Boostrap {
-  constructor() {
-    this.register.attributes = {
-      name: 'boostrap',
-      version: '1.0.0'
-    };
-  }
-
-  register: IPlugin = (server: Hapi.Server, options: any, next: any) => {
+export const boostrap: IPlugin = {
+  register: (server: Hapi.Server, options: any, next: any) => {
     server.register([
       HapiAuthJwt2,
       {
@@ -49,16 +42,11 @@ class Boostrap {
         if (err) throw err;
       });
     });
-
-    server.bind(this);
-    this._register(server, options);
-    next();
-  };
-
-  private _register(server, options) {
-    // Register
-    return 'register';
+    return next();
   }
 }
 
-export default new Boostrap();
+boostrap.register.attributes = {
+  name: 'boostrap',
+  version: '1.0.0'
+}
