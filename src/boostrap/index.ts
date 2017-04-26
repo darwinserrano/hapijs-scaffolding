@@ -6,23 +6,29 @@ import * as authentication from './authentication';
 import * as HapiAuthJwt2 from 'hapi-auth-jwt2';
 import * as HapiSequelize from 'hapi-sequelize';
 import * as HapiRouter from 'hapi-router';
-import { IPlugin } from '../interfaces';
+import { IPlugin, IPluginRegister } from '../interfaces';
 
-export const boostrap: IPlugin = {
-  register: (server: Hapi.Server, options: any, next: any) => {
-    server.register([
-      HapiAuthJwt2,
-      {
-        register: HapiSequelize,
-        options: [{
-          name: 'test', // identifier
-          models: ['./dist/models/pg-test/**/*.js'], // paths/globs to model files
-          sequelize: new Sequelize(config.bd.name, config.bd.user, config.bd.pass, config.bd.options), // sequelize instance
-          sync: false, // sync models - default false
-          forceSync: false
-        }]
-      }
-    ], err => {
+class Boostrap implements IPlugin {
+  constructor() {
+    this.register.attributes = {
+      name: 'boostrap',
+      version: '1.0.0'
+    }
+  }
+
+  register: IPluginRegister = (server: Hapi.Server, options: any, next: any) => {
+    server.register({
+      register: HapiSequelize,
+      options: [{
+        name: 'test', // identifier
+        models: ['./dist/models/pg-test/**/*.js'], // paths/globs to model files
+        sequelize: new Sequelize(config.bd.name, config.bd.user, config.bd.pass, config.bd.options), // sequelize instance
+        sync: false, // sync models - default false
+        forceSync: false
+      }]
+    });
+
+    server.register(HapiAuthJwt2, err => {
       server.auth.strategy('jwt', 'jwt', {
         key: config.secret, // Never Share your secret key
         validateFunc: authentication, // validate function defined above
@@ -33,12 +39,12 @@ export const boostrap: IPlugin = {
 
       server.auth.default('jwt');
 
-      server.register([{
+      server.register({
         register: HapiRouter,
         options: {
           routes: 'dist/routes/**/*.js' // uses glob to include files
         }
-      }], err => {
+      }, err => {
         if (err) throw err;
       });
     });
@@ -46,7 +52,4 @@ export const boostrap: IPlugin = {
   }
 }
 
-boostrap.register.attributes = {
-  name: 'boostrap',
-  version: '1.0.0'
-}
+export const boostrap = new Boostrap();

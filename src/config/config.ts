@@ -1,7 +1,7 @@
 export default {
   "secret": "NeverShareYourSecret",
   "bd": {
-    "name": "test",
+    "name": "postgres",
     "user": "postgres",
     "pass": "postgres",
     "options": {
